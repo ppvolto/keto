@@ -81,9 +81,7 @@ var (
 					Resource: "forbidden_subject",
 					Action:   "create",
 					Context: map[string]interface{}{
-						"subject": map[string]string{
-							"type": "EqualsSubjectCondition",
-						},
+						"subject": "ken",
 					},
 				},
 				allowed: false,
@@ -94,9 +92,7 @@ var (
 					Resource: "allowed_subject",
 					Action:   "create",
 					Context: map[string]interface{}{
-						"subject": map[string]string{
-							"type": "EqualsSubjectCondition",
-						},
+						"subject": "ken",
 					},
 				},
 				allowed: true,
@@ -107,12 +103,7 @@ var (
 					Resource: "forbidden_condition",
 					Action:   "create",
 					Context: map[string]interface{}{
-						"group": map[string]interface{}{
-							"type": "StringEqualCondition",
-							"options": map[string]string{
-								"equals": "the-value-should-be-this",
-							},
-						},
+						"subject": "ken",
 					},
 				},
 				allowed: false,
@@ -123,12 +114,7 @@ var (
 					Resource: "allowed_condition",
 					Action:   "create",
 					Context: map[string]interface{}{
-						"group": map[string]interface{}{
-							"type": "StringEqualCondition",
-							"options": map[string]string{
-								"equals": "the-value-should-be-this",
-							},
-						},
+						"group": "the-value-should-be-this",
 					},
 				},
 				allowed: true,
@@ -186,9 +172,7 @@ var (
 					Resource: "forbidden_subject",
 					Action:   "create",
 					Context: map[string]interface{}{
-						"subject": map[string]string{
-							"type": "EqualsSubjectCondition",
-						},
+						"subject": "ken",
 					},
 				},
 				allowed: false,
@@ -199,9 +183,7 @@ var (
 					Resource: "allowed_subject",
 					Action:   "create",
 					Context: map[string]interface{}{
-						"subject": map[string]string{
-							"type": "EqualsSubjectCondition",
-						},
+						"subject": "ken",
 					},
 				},
 				allowed: true,
@@ -212,12 +194,7 @@ var (
 					Resource: "forbidden_condition",
 					Action:   "create",
 					Context: map[string]interface{}{
-						"group": map[string]interface{}{
-							"type": "StringEqualCondition",
-							"options": map[string]string{
-								"equals": "the-value-should-be-this",
-							},
-						},
+						"group": "the-value-should-be-this",
 					},
 				},
 				allowed: false,
@@ -228,12 +205,7 @@ var (
 					Resource: "allowed_condition",
 					Action:   "create",
 					Context: map[string]interface{}{
-						"group": map[string]interface{}{
-							"type": "StringEqualCondition",
-							"options": map[string]string{
-								"equals": "the-value-should-be-this",
-							},
-						},
+						"group": "the-value-should-be-this",
 					},
 				},
 				allowed: true,
@@ -276,7 +248,9 @@ var (
 				Resources: []string{"forbidden_subject", "rn:hydra:token<.*>"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"subject": "ken",
+					"subject": map[string]interface{}{
+						"type": "EqualsSubjectCondition",
+					},
 				},
 				Effect: Deny,
 			},
@@ -286,7 +260,9 @@ var (
 				Resources: []string{"allowed_subject", "rn:hydra:token<.*>"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"subject": "ken",
+					"subject": map[string]interface{}{
+						"type": "EqualsSubjectCondition",
+					},
 				},
 				Effect: Allow,
 			},
@@ -296,7 +272,9 @@ var (
 				Resources: []string{"forbidden_subject", "rn:hydra:token<.*>"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"subject": "ken",
+					"subject": map[string]interface{}{
+						"type": "EqualsSubjectCondition",
+					},
 				},
 				Effect: Deny,
 			},
@@ -306,7 +284,12 @@ var (
 				Resources: []string{"allowed_subject", "rn:hydra:token<.*>"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"subject": "ken",
+					"group": map[string]interface{}{
+						"options": map[string]interface{}{
+							"equals": "the-value-should-be-this",
+						},
+						"type": "StringEqualCondition",
+					},
 				},
 				Effect: Allow,
 			},
@@ -316,7 +299,12 @@ var (
 				Resources: []string{"forbidden_condition", "rn:hydra:token<.*>"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"group": "the-value-should-be-this",
+					"group": map[string]interface{}{
+						"options": map[string]interface{}{
+							"equals": "the-value-should-be-this",
+						},
+						"type": "StringEqualCondition",
+					},
 				},
 				Effect: Deny,
 			},
@@ -326,7 +314,12 @@ var (
 				Resources: []string{"allowed_condition", "rn:hydra:token<.*>"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"group": "the-value-should-be-this",
+					"group": map[string]interface{}{
+						"options": map[string]interface{}{
+							"equals": "the-value-should-be-this",
+						},
+						"type": "StringEqualCondition",
+					},
 				},
 				Effect: Allow,
 			},
@@ -366,7 +359,9 @@ var (
 				Resources: []string{"forbidden_subject", "rn:hydra:token"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"subject": "ken",
+					"subject": map[string]interface{}{
+						"type": "EqualsSubjectCondition",
+					},
 				},
 				Effect: Deny,
 			},
@@ -376,7 +371,9 @@ var (
 				Resources: []string{"allowed_subject", "rn:hydra:token"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"subject": "ken",
+					"subject": map[string]interface{}{
+						"type": "EqualsSubjectCondition",
+					},
 				},
 				Effect: Allow,
 			},
@@ -386,7 +383,9 @@ var (
 				Resources: []string{"forbidden_subject", "rn:hydra:token"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"subject": "ken",
+					"subject": map[string]interface{}{
+						"type": "EqualsSubjectCondition",
+					},
 				},
 				Effect: Deny,
 			},
@@ -396,7 +395,9 @@ var (
 				Resources: []string{"allowed_subject", "rn:hydra:token"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"subject": "ken",
+					"subject": map[string]interface{}{
+						"type": "EqualsSubjectCondition",
+					},
 				},
 				Effect: Allow,
 			},
@@ -406,7 +407,12 @@ var (
 				Resources: []string{"forbidden_subject", "rn:hydra:token"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"group": "the-value-should-be-this",
+					"group": map[string]interface{}{
+						"options": map[string]interface{}{
+							"equals": "the-value-should-be-this",
+						},
+						"type": "StringEqualCondition",
+					},
 				},
 				Effect: Deny,
 			},
@@ -416,7 +422,12 @@ var (
 				Resources: []string{"allowed_subject", "rn:hydra:token"},
 				Actions:   []string{"create", "decide"},
 				Conditions: map[string]interface{}{
-					"group": "the-value-should-be-this",
+					"group": map[string]interface{}{
+						"options": map[string]interface{}{
+							"equals": "the-value-should-be-this",
+						},
+						"type": "StringEqualCondition",
+					},
 				},
 				Effect: Allow,
 			},
