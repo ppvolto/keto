@@ -75,6 +75,28 @@ var (
 				},
 				allowed: true,
 			},
+			{
+				req: swagger.OryAccessControlPolicyAllowedInput{
+					Subject:  "ken",
+					Resource: "remoteip_matrix",
+					Action:   "create",
+					Context: map[string]interface{}{
+						"remoteIPAddress": "192.168.0.5",
+					},
+				},
+				allowed: false,
+			},
+			{
+				req: swagger.OryAccessControlPolicyAllowedInput{
+					Subject:  "ken",
+					Resource: "remoteip_matrix",
+					Action:   "create",
+					Context: map[string]interface{}{
+						"remoteIPAddress": "192.168.10.5",
+					},
+				},
+				allowed: true,
+			},
 		},
 		"exact": {
 			{
@@ -122,6 +144,50 @@ var (
 				},
 				allowed: true,
 			},
+			{
+				req: swagger.OryAccessControlPolicyAllowedInput{
+					Subject:  "ken",
+					Resource: "remoteip_matrix",
+					Action:   "create",
+					Context: map[string]interface{}{
+						"remoteIPAddress": "192.168.0.5",
+					},
+				},
+				allowed: false,
+			},
+			{
+				req: swagger.OryAccessControlPolicyAllowedInput{
+					Subject:  "ken",
+					Resource: "remoteip_matrix",
+					Action:   "create",
+					Context: map[string]interface{}{
+						"remoteIPAddress": "192.168.10.5",
+					},
+				},
+				allowed: true,
+			},
+			{
+				req: swagger.OryAccessControlPolicyAllowedInput{
+					Subject:  "ken",
+					Resource: "subject_matrix",
+					Action:   "create",
+					Context: map[string]interface{}{
+						"owner": "alice",
+					},
+				},
+				allowed: false,
+			},
+			{
+				req: swagger.OryAccessControlPolicyAllowedInput{
+					Subject:  "ken",
+					Resource: "subject_matrix",
+					Action:   "create",
+					Context: map[string]interface{}{
+						"owner": "ken",
+					},
+				},
+				allowed: true,
+			},
 		},
 	}
 	policies = map[string]Policies{
@@ -154,6 +220,48 @@ var (
 				Actions:   []string{"create", "decide"},
 				Effect:    Allow,
 			},
+			Policy{
+				ID:        "5",
+				Subjects:  []string{"group1"},
+				Resources: []string{"remoteip_matrix", "rn:hydra:token<.*>"},
+				Actions:   []string{"create", "decide"},
+				Conditions: map[string]interface{}{
+					"remoteIPAddress": map[string]interface{}{
+						"options": map[string]interface{}{
+							"cidr": "192.168.0.0/16",
+						},
+						"type": "CIDRCondition",
+					},
+				},
+				Effect: Deny,
+			},
+			Policy{
+				ID:        "6",
+				Subjects:  []string{"group1"},
+				Resources: []string{"remoteip_matrix", "rn:hydra:token<.*>"},
+				Actions:   []string{"create", "decide"},
+				Conditions: map[string]interface{}{
+					"remoteIPAddress": map[string]interface{}{
+						"options": map[string]interface{}{
+							"cidr": "192.168.10.0/24",
+						},
+						"type": "CIDRCondition",
+					},
+				},
+				Effect: Allow,
+			},
+			Policy{
+				ID:        "7",
+				Subjects:  []string{"group1"},
+				Resources: []string{"subject_matrix", "rn:hydra:token<.*>"},
+				Actions:   []string{"create", "decide"},
+				Conditions: map[string]interface{}{
+					"owner": map[string]interface{}{
+						"type": "EqualsSubjectCondition",
+					},
+				},
+				Effect: Allow,
+			},
 		},
 		"exact": {
 			Policy{
@@ -183,6 +291,48 @@ var (
 				Resources: []string{"allowed_matrix", "rn:hydra:token"},
 				Actions:   []string{"create", "decide"},
 				Effect:    Allow,
+			},
+			Policy{
+				ID:        "5",
+				Subjects:  []string{"group1"},
+				Resources: []string{"remoteip_matrix", "rn:hydra:token"},
+				Actions:   []string{"create", "decide"},
+				Conditions: map[string]interface{}{
+					"remoteIPAddress": map[string]interface{}{
+						"options": map[string]interface{}{
+							"cidr": "192.168.0.0/16",
+						},
+						"type": "CIDRCondition",
+					},
+				},
+				Effect: Deny,
+			},
+			Policy{
+				ID:        "6",
+				Subjects:  []string{"group1"},
+				Resources: []string{"remoteip_matrix", "rn:hydra:token"},
+				Actions:   []string{"create", "decide"},
+				Conditions: map[string]interface{}{
+					"remoteIPAddress": map[string]interface{}{
+						"options": map[string]interface{}{
+							"cidr": "192.168.10.0/24",
+						},
+						"type": "CIDRCondition",
+					},
+				},
+				Effect: Allow,
+			},
+			Policy{
+				ID:        "7",
+				Subjects:  []string{"group1"},
+				Resources: []string{"subject_matrix", "rn:hydra:token"},
+				Actions:   []string{"create", "decide"},
+				Conditions: map[string]interface{}{
+					"owner": map[string]interface{}{
+						"type": "EqualsSubjectCondition",
+					},
+				},
+				Effect: Allow,
 			},
 		},
 	}
